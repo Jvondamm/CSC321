@@ -1,9 +1,9 @@
 # Part 1
-1. I see a general "random" pattern in the encrypted photos when zooming in, but the overall shape is still visible in ecb. 
-2. I can see outlines of the original picture, but it is quite hard to distinguish what it was, and there is no way to tell the original colors of the image. 
-3. For ECB, it creates random bytes of the image, but uses essentially the same "seed" each time, so distinctive changes in the original photo, such as a complete color change,
-show up in the encrypted photo. For CBC, 
-
+1. I see a general "random" pattern in the encrypted logo when zooming in, but the overall shape is still visible in ECB, whereas in CBC I can't distinguish any pattern at all and it looks purely random.
+2. In ECB, I can see outlines of the original picture, but it is quite hard to distinguish what it was, and there is no way to tell the original colors of the image. FOr CBC I can't distinguish anything.
+3. For ECB, it creates random bytes of the image, but uses essentially the same "seed" each time on each block, so each block consisting of the same bits ets encrypted the same. But for CBC, it XOR's with a initial vector, which changes for each block encryption, so it becomes much more random by design block-per-block.
 # Part 2
+
+000000000000;admin=truea
 
 # Part 3
