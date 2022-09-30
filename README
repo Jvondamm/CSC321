@@ -4,6 +4,6 @@
 3. For ECB, it creates random bytes of the image, but uses essentially the same "seed" each time on each block, so each block consisting of the same bits ets encrypted the same. But for CBC, it XOR's with a initial vector, which changes for each block encryption, so it becomes much more random by design block-per-block.
 # Part 2
 
-000000000000;admin=truea
+000000000000;adminatruea
 
 # Part 3

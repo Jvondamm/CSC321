@@ -78,6 +78,9 @@ def part2():
     # my ciphertext is a bytearray
     # I have no clue how to flip the bits.
     # I have tried so many implementations to no avail.
+    ciphertext[18] = 59 ^ ciphertext[18 + 16]
+    ciphertext[24] = 61 ^ ciphertext[24 + 16]
+    print(ciphertext[18 + 16], ciphertext[18])
 
     verify(ciphertext, key, initVector)
 
@@ -91,9 +94,9 @@ def submit(key, initVector):
     cbc = AES.new(key, AES.MODE_ECB)
     cbcMsg = bytearray()
     curVector = initVector
-
+    url = pad(url)
     for i in range(0, len(url), AES_LEN):
-        block = xor(pad(url[i:i+AES_LEN]), curVector)
+        block = xor(url[i:i+AES_LEN], curVector)
         curVector = cbc.encrypt(block)
         cbcMsg += curVector
     return cbcMsg
@@ -105,6 +108,8 @@ def verify(ciphertext, key, curVector):
     for i in range(0, len(ciphertext), AES_LEN):
         block = ciphertext[i:i+AES_LEN]
         msg = cbc.decrypt(bytes(block))
+        if i == 32:
+            print(msg[2], curVector[2])
         plaintext += xor(msg, curVector)
         curVector = block
 
