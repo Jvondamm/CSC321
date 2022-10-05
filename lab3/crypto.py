@@ -294,15 +294,11 @@ def part4A():
     output_list = [li for li in difflib.ndiff(hashed1, hashed2) if li[0] != ' ']
     print(output_list, len(output_list))
 
-def part4B():
-    chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    step = 2
+def bday(chars, step):
     count = 0
     length = 1
     hashes = {}
     m = ''
-
-    print("Breaking bit length of ", step)
     start = timeit.default_timer()
     while True:
         for a in product(chars, repeat=length):
@@ -313,12 +309,17 @@ def part4B():
                 if hashes[hash] != msg:
                     stop = timeit.default_timer()
                     print("M1: ", hashes[hash], "M2: ", msg, "Hash: ", hash)
-                    print("Time to break: ", start-stop, "\n")
-                    print("Breaking bit length of ", step)
-                step += 2
+                    print("Time to break: ", stop-start, "Hashes attempted: ", count, "\n")
+                    return
             else:
                 hashes[hash] = msg
         length += 1
+
+def part4B():
+    chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    for step in range(2, 50, 2):
+        print("Breaking bit length of ", step)
+        bday(chars, step)
 
 def main():
     part4B()
