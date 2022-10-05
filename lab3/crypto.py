@@ -309,12 +309,15 @@ def part4B():
             msg = m.join(a)
             hash = hashlib.sha256(msg.encode()).hexdigest()[:step]
             count += 1
-            if hash not in hashes:
-                hashes[hash] = msg
-            elif hashes[hash] != msg:
-                print(hash, hashes[hash], msg)
-                print("Breaking bit length of ", step)
+            if hash in hashes:
+                if hashes[hash] != msg:
+                    stop = timeit.default_timer()
+                    print("M1: ", hashes[hash], "M2: ", msg, "Hash: ", hash)
+                    print("Time to break: ", start-stop, "\n")
+                    print("Breaking bit length of ", step)
                 step += 2
+            else:
+                hashes[hash] = msg
         length += 1
 
 def main():
