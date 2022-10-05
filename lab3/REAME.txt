@@ -1,0 +1,27 @@
+Part I.
+How hard would it be for an adversary to solve the Diffie Hellman Problem (DHP) given these parameters?
+
+What strategy might the adversary take?
+
+Would the same strategy used for the tiny parameters work here?
+
+Why or why not?
+
+Part II.
+Why were these attacks possible?
+    Because the algorithm to choose G didn't ensure it's random value wasn't 1.
+
+What is necessary to prevent it?
+    It should pick a minimum of ~900 bits to be secure.
+
+Part III.
+While it’s very common for many people to share an e (common values are 3,7, 216+1), it is very bad if two people share an RSA modulus n. Briefly describe why this is, and what the ramifications are.
+
+Give another example of how RSA’s malleability could be used to exploit a system (e.g. to cause confusion, disruption, or violate integrity).
+
+Suppose Mallory sees the signatures for two message m1 and m2. Show how Mallory can create a valid signature for a third message, m3 = m1 ∙ m2.
+
+
+Part IV.
+What do you observe? How many of the bytes are different between the two digests?
+That they differ a lot. Around 50 bits on average.
