@@ -103,14 +103,15 @@ def part2A():
     aMallory = random.randint(1, P - 1)
     bMallory = random.randint(1, P - 1)
 
-    AMallory = pow(G, aMallory, P)
-    BMallory = pow(G, bMallory, P)
-
     # Alice and Bob make their A and B, but Mallory intercepts and they are never used
     AAlice = pow(G, aAlice, P)
     BBob = pow(G, bBob, P)
 
-    # INTERCEPT
+    # Mallory computes her own A and B for Alice and Bob
+    AMallory = pow(G, aMallory, P)
+    BMallory = pow(G, bMallory, P)
+
+    # Mallory sends her own A and B to Alice and Bob
     sAlice = pow(BMallory, aAlice, P)
     sBob = pow(AMallory, bBob, P)
 
@@ -163,7 +164,6 @@ def part2B():
     BBob = pow(G, bBob, P)
 
     # Mallory knows AAlive and BBob are 1 which makes sAlice and sBob 1.
-
     sAlice = pow(BBob, aAlice, P)
     sBob = pow(AAlice, bBob, P)
 
@@ -172,6 +172,7 @@ def part2B():
     kAlice = hashlib.sha256(str(sAlice).encode()).hexdigest()
     kBob = hashlib.sha256(str(sBob).encode()).hexdigest()
 
+    # Mallory knows the value is 1 and encodes the same secret
     kMallory = hashlib.sha256(str(1).encode()).hexdigest()
 
     print("Alice and Bob keys match: " + str(kAlice == kBob))
@@ -181,6 +182,7 @@ def part2B():
     curVector = urandom(16)
     cbc = AES.new(kAlice[:16].encode("utf8"), AES.MODE_ECB)
 
+    # Mallory can then duplicate Alice and Bob's deterministic cipher
     cbcMallory = AES.new(kMallory[:16].encode("utf8"), AES.MODE_ECB)
 
     mAlice = bytes("Hi Bob!", 'utf-8')
@@ -189,7 +191,7 @@ def part2B():
     eAlice = encrypt(mAlice, cbc, curVector)
     eBob = encrypt(mBob, cbc, curVector)
 
-    # Mallory can decrypt the messages she intercepts
+    # Mallory can now decrypt the messages she intercepts
     mAMallory = decrypt(eAlice, cbcMallory, curVector)
     mBMallory = decrypt(eBob, cbcMallory, curVector)
     print("Mallory's decrypted intercepted messages from Alice and Bob:")
