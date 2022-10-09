@@ -11,21 +11,20 @@ def bday(chars, step):
     while True:
         for a in product(chars, repeat=length):
             msg = m.join(a)
-            hash = hashlib.sha256(msg.encode()).hexdigest()[:step]
+            hash = int(hashlib.sha256(msg.encode()).hexdigest(), 16) & (pow(2, step)-1)
             count += 1
             if hash in hashes:
-                if hashes[hash] != msg:
-                    stop = timeit.default_timer()
-                    print("M1: ", hashes[hash], "M2: ", msg, "Hash: ", hash)
-                    print("Time to break: ", stop-start, "Hashes attempted: ", count, "\n")
-                    return
+                stop = timeit.default_timer()
+                print("M1: ", hashes[hash], "M2: ", msg, "Hash: ", hash)
+                print("Time to break: ", stop-start, "Hashes attempted: ", count, "\n")
+                return
             else:
                 hashes[hash] = msg
         length += 1
 
 def part4B():
     chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    for step in range(2, 50, 2):
+    for step in range(2, 52, 2):
         print("Breaking bit length of ", step)
         bday(chars, step)
 

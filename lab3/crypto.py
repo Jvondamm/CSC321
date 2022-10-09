@@ -288,13 +288,12 @@ def part3B():
 
 
 def part4A():
+    step = 4
     input1 = b"0000000110001"
     input2 = b"0000000110000"
-    hashed1 = hashlib.sha256(str(input1).encode()).hexdigest()
-    hashed2 = hashlib.sha256(str(input2).encode()).hexdigest()
-    print(hashed1, hashed2, len(hashed1))
-    output_list = [li for li in difflib.ndiff(hashed1, hashed2) if li[0] != ' ']
-    print(output_list, len(output_list))
+    hashed1 = int(hashlib.sha256(str(input1).encode()).hexdigest(), 16) & (pow(2, step)-1)
+    hashed2 = int(hashlib.sha256(str(input2).encode()).hexdigest(), 16) & (pow(2, step)-1)
+    print(hashed1, hashed2)
 
 def bday(chars, step):
     count = 0
@@ -305,26 +304,25 @@ def bday(chars, step):
     while True:
         for a in product(chars, repeat=length):
             msg = m.join(a)
-            hash = hashlib.sha256(msg.encode()).hexdigest()[:step]
+            hash = int(hashlib.sha256(msg.encode()).hexdigest(), 16) & (pow(2, step)-1)
             count += 1
             if hash in hashes:
-                if hashes[hash] != msg:
-                    stop = timeit.default_timer()
-                    print("M1: ", hashes[hash], "M2: ", msg, "Hash: ", hash)
-                    print("Time to break: ", stop-start, "Hashes attempted: ", count, "\n")
-                    return
+                stop = timeit.default_timer()
+                print("M1: ", hashes[hash], "M2: ", msg, "Hash: ", hash)
+                print("Time to break: ", stop-start, "Hashes attempted: ", count, "\n")
+                return
             else:
                 hashes[hash] = msg
         length += 1
 
 def part4B():
     chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    for step in range(2, 50, 2):
+    for step in range(2, 52, 2):
         print("Breaking bit length of ", step)
         bday(chars, step)
 
 def main():
-    part4B()
+    part1()
 
 if __name__ == "__main__":
     main()
