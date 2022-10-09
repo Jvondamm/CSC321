@@ -1,9 +1,10 @@
 from nltk.corpus import words
 import bcrypt
+import timeit
 
 words = words.words()
 words = [word for word in words if (len(word) >= 6 and len(word) <= 8)]
-print(len(words))
+print("Number of words: ", len(words))
 
 passwords = {}
 with open('shadow_file.txt') as f:
@@ -16,17 +17,20 @@ with open('shadow_file.txt') as f:
             passwords[salt] = [password]
 
 counter = 0
+start = timeit.default_timer()
 
 for word in words:
-    if counter % 15 == 0:
+    if counter % 60 == 0:
         print(counter)
     for salt in passwords:
         hashed = bcrypt.hashpw(word.encode('utf-8'), salt)
         for password in passwords[salt]:
             counter += 1
             if hashed == password:
-                print("Cracked password is: ", word)
-
+                passwords[salt].remove(password)
+                stop = timeit.default_timer()
+                print("Cracked password is: ", word, " Time to crack: ", stop-start)
+                start = timeit.default_timer()
 
 # for word in words:
 #     if counter % 15 == 0:
