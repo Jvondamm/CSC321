@@ -1,0 +1,13 @@
+Cracked password is:  desire  Time to crack:  929.2772233999999
+Cracked password is:  airway  Time to crack:  1067.2360598
+Cracked password is:  diamond  Time to crack:  1107.4439424
+Cracked password is:  hangout  Time to crack:  1955.3984105
+Cracked password is:  drossy  Time to crack:  2232.997454
+Cracked password is:  ispaghul  Time to crack:  2894.9848531
+Cracked password is:  purrone  Time to crack:  3993.4995205
+Cracked password is:  ossify  Time to crack:  4214.176478199999
+Cracked password is:  oversave  Time to crack:  4897.4514813999995
+Cracked password is:  welcome  Time to crack:  5117.2546413
+Cracked password is:  wizard  Time to crack:  5637.7774219
+Cracked password is:  swagsman  Time to crack:  5969.4818947
+Cracked password is:  desire  Time to crack:  6516.279244199999
