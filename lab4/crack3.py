@@ -1,15 +1,6 @@
 from nltk.corpus import words
-from multiprocessing import Pool, freeze_support
-from functools import partial
 import bcrypt
 import timeit
-
-def loop(passwords, start, word):
-    for salt in passwords:
-        hashed = bcrypt.hashpw(word.encode('utf-8'), salt)
-        for password in passwords[salt]:
-            if hashed == password:
-                print("Cracked password is: ", word, " for hash: ", hashed, " Time to crack: ", timeit.default_timer()-start)
 
 def main():
     strings = words.words()
@@ -27,12 +18,10 @@ def main():
                 passwords[salt] = [password]
     start = timeit.default_timer()
 
-    pool = Pool()
-    pool.map(partial(loop, passwords, start), strings)
-    pool.close()
-    pool.join()
-
+    for word in words:
+        for password in passwords:
+            if bcrypt.checkpw(word.encode('utf-8'), password):
+                print("Cracked password is: ", word, " for hash: ", password, " Time to crack: ", timeit.default_timer()-start)
 
 if __name__=="__main__":
-    freeze_support()
     main()
