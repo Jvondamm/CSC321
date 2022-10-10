@@ -5,12 +5,9 @@ import bcrypt
 import timeit
 
 def loop(passwords, start, word):
-    for salt in passwords:
-        hashed = bcrypt.hashpw(word.encode('utf-8'), salt)
-        for password in passwords[salt]:
-            if hashed == password:
-                passwords[salt].remove(password)
-                print("Cracked password is: ", word, " for hash: ", hashed, " Time to crack: ", timeit.default_timer()-start)
+    for password in passwords:
+        if bcrypt.checkpw(word.encode('utf-8'), password):
+            print("Cracked password is: ", word, " for hash: ", password, " Time to crack: ", timeit.default_timer()-start)
 
 def main():
     strings = words.words()
